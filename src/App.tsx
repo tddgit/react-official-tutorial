@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './index.css';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Minutes() {
+    const minutes = 5;
+    return (
+        <div className={'Minutes'}>
+            <div>
+                <button
+                    type={'button'}
+                    className={'icon_button Minutes_button'}
+                >
+                    <FaMinus />
+                </button>
+            </div>
+            <div
+                className={'Minutes_label'}
+                // htmlFor={'minutes'}
+            >
+                {minutes} Minutes
+            </div>
+            <div>
+                <button
+                    type={'button'}
+                    className={'icon_button Minutes_button'}
+                >
+                    <FaPlus />
+                </button>
+            </div>
+        </div>
+    );
 }
 
-export default App;
+export { Minutes as App };
+
+// function App() {
+//     return (
+//         <div className="App">
+//             <header className="App-header">
+//                 <img
+//                     src={logo}
+//                     className="App-logo"
+//                     alt="logo"
+//                 />
+//                 <p>
+//                     Edit <code>src/App.tsx</code> and save
+//                     to reload.
+//                 </p>
+//                 <a
+//                     className="App-link"
+//                     href="https://reactjs.org"
+//                     target="_blank"
+//                     rel="noopener noreferrer"
+//                 >
+//                     Learn React
+//                 </a>
+//             </header>
+//         </div>
+//     );
+// }

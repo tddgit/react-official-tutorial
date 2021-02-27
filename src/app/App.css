@@ -83,8 +83,8 @@ body {
 .Layout {
   min-height: 100vh;
   background-color: #edf4f7;
-  /*background-image: url("./assets/blue-fade.svg"), url("./assets/blue-fade.svg"),*/
-  /*url("./assets/blue-fade.svg");*/
+  background-image: url("./assets/blue-fade.svg"), url("./assets/blue-fade.svg"),
+    url("./assets/blue-fade.svg");
   background-position: 10vw 0, 25vw -10vw, 50vw -10vw;
   background-size: 110vw, 110vw, 140vw;
   background-repeat: no-repeat;
@@ -776,11 +776,11 @@ h2 {
   height: 16rem;
   background: #f6f7f8;
   background-image: linear-gradient(
-          to right,
-          #f6f7f8 0%,
-          #edeef1 20%,
-          #f6f7f8 40%,
-          #f6f7f8 100%
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
   );
   background-repeat: no-repeat;
   background-size: 120% 100%;
@@ -891,14 +891,4 @@ h2 {
 
 [data-reach-menu-item][data-selected] {
   background: var(--accent);
-}
-
-body {
-  padding: 10px;
-}
-
-.Minutes {
-  margin-top: 100px;
-  flex: 1;
-  justify-content: center;
 }
