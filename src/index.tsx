@@ -1,4 +1,4 @@
-import React, { Props } from "react";
+import React, { MouseEventHandler, Props, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 // import App from "./App";
@@ -177,6 +177,18 @@ class Clock extends React.Component<DateProps, IState> {
     if (this.timerID instanceof NodeJS.Timeout) {
       clearInterval(this.timerID);
     }
+    // this.setState(function (state, props) {
+    //   return {
+    //     counter: state.counter + props.increment
+    //   }
+    // })
+
+    // constructor(props) {
+    //   super(props);
+    //   this.state = {
+    //     posts: [],
+    //     comments: [],
+    //   }
   }
   tick() {
     this.setState({
@@ -194,6 +206,31 @@ class Clock extends React.Component<DateProps, IState> {
   }
 }
 
+function FormattedDate(props: DateProps) {
+  return <h2>It is {props.date!.toLocaleTimeString()}</h2>;
+}
+
+// function App() {
+//   return (
+//     <div>
+//       <Clock />
+//       <Clock />
+//       <Clock />
+//     </div>
+//   );
+// }
+
+function ActionLink() {
+  function handleClick(e: any) {
+    e.preventDefault();
+    console.log("This link was clicked");
+  }
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  );
+}
 // class ClockClass extends React.Component<DateProps> {
 //   render() {
 //     return (
@@ -204,11 +241,226 @@ class Clock extends React.Component<DateProps, IState> {
 //     );
 //   }
 // }
+type ButtonProps = {
+  // isToggleOn: boolean;
+  // handleClick() void;
+};
+
+interface ButtonState {
+  isToggleOn: boolean;
+}
+class Toggle extends React.Component<ButtonProps, ButtonState> {
+  constructor(props: ButtonProps) {
+    super(props);
+    this.state = { isToggleOn: true };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState((state) => ({
+      isToggleOn: !state.isToggleOn,
+    }));
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? "ON" : "OFF"}
+      </button>
+    );
+  }
+}
+
+class LoggingButton extends React.Component {
+  handleClick = () => {
+    console.log("this is: ", this);
+  };
+
+  render() {
+    return <button onClick={this.handleClick}></button>;
+  }
+
+  // render() {
+  //   return <button onClick={{() => this.handleClick}></button>
+  // }
+}
 
 function tickNew() {
   ReactDOM.render(<Clock />, document.getElementById("root"));
 }
 
+function UserGreeting(props: unknown) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props: unknown) {
+  return <h1>Please sign up.</h1>;
+}
+type IsLoggedIn = {
+  isLoggedIn?: boolean;
+};
+
+function Greeting(props: IsLoggedIn) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+function LoginButton(props: { onClick(): HTMLElement }) {
+  return <button onClick={props.onClick}>Login</button>;
+}
+
+function LogoutButton(props: { onClick(): HTMLElement }) {
+  return <button onClick={props.onClick}>Logout</button>;
+}
+interface LoginProps {}
+
+interface LoginState {
+  isLoggedIn: boolean;
+}
+
+class LoginControl extends React.Component<LoginProps, LoginState> {
+  constructor(props: LoginProps) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = { isLoggedIn: false };
+  }
+  handleLoginClick() {
+    this.setState({ isLoggedIn: true });
+  }
+
+  handleLogoutClick() {
+    this.setState({ isLoggedIn: false });
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    if (isLoggedIn) {
+      // @ts-ignore
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      // @ts-ignore
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+function Mailbox(props: { unreadMessages: string[] }) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 && (
+        <h2>You have {unreadMessages.length} unread messages.</h2>
+      )}
+    </div>
+  );
+}
+
+const messages = ["React", "Re: React", "Re:Re: React"];
+
 // setInterval(tickNew, 1000);
 
-ReactDOM.render(<Clock />, document.getElementById("root"));
+function WarningBanner(props: { warn: boolean }) {
+  if (!props.warn) {
+    return null;
+  }
+  return <div className="warning">Warning!</div>;
+}
+
+class Page extends React.Component<
+  { showWarning?: boolean },
+  { showWarning: boolean }
+> {
+  constructor(props: { showWarning: boolean }) {
+    super(props);
+    this.state = { showWarning: true };
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  handleToggleClick() {
+    this.setState((state: { showWarning: boolean }) => ({
+      showWarning: !state.showWarning,
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <WarningBanner warn={this.state.showWarning} />
+        <button onClick={this.handleToggleClick}>
+          {this.state.showWarning ? "Hide" : "Show"}
+        </button>
+      </div>
+    );
+  }
+}
+
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((number) => number * 2);
+
+const listItems = numbers.map((number) => {
+  return <li>{number}</li>;
+});
+
+function NumberList(props: { numbers: number[] }) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) => <li>{number}</li>);
+  return <ul>{listItems}</ul>;
+}
+
+//*****************************************************
+
+//======================================================
+
+//=======================HOOKS==========================
+
+function Example() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+
+function ExampleWithManyStates() {
+  const [age, setAge] = useState(42);
+  const [fruit, setFruit] = useState("banana");
+  const [todos, setTodos] = useState([{ text: "Learn" + " Hooks" }]);
+}
+
+function ExampleNew() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  });
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null)
+  function handlessStatusChange(status) {
+    setIsOnline(status.)
+  }
+}
+
+ReactDOM.render(<ExampleNew />, document.getElementById("root"));
