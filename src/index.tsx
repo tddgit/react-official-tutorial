@@ -442,6 +442,16 @@ class Columns extends React.Component {
   }
 }
 
+const MyComponents = {
+  DatePicker(props: { color: string }) {
+    return <div>Imagine a {props.color} datepicker here</div>;
+  },
+};
+
+function BlueDatePicker() {
+  return <MyComponents.DatePicker color={"blue"} />;
+}
+
 //*****************************************************
 
 //======================================================
@@ -479,11 +489,24 @@ function ExampleNew() {
   );
 }
 
-function FriendStatus(props) {
-  const [isOnline, setIsOnline] = useState(null);
-  function handlessStatusChange(status) {
-    setIsOnline(status.isOnline);
+class XSearch extends HTMLElement {
+  connectedCallback() {
+    const mountPoint = document.createElement("span");
+    this.attachShadow({ mode: "open" }).appendChild(mountPoint);
+
+    const name = this.getAttribute("name");
+    const url = "https://www.google.com/search?q=" + encodeURIComponent(name!);
+    ReactDOM.render(<a href={url}>{name}</a>, mountPoint);
   }
 }
+
+customElements.define("x-search", XSearch);
+
+// function FriendStatus(props) {
+//   const [isOnline, setIsOnline] = useState(null);
+//   function handlessStatusChange(status) {
+//     setIsOnline(status.isOnline);
+//   }
+// }
 
 ReactDOM.render(<ExampleNew />, document.getElementById("root"));
