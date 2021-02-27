@@ -419,6 +419,29 @@ function NumberList(props: { numbers: number[] }) {
   return <ul>{listItems}</ul>;
 }
 
+class Table extends React.Component {
+  render() {
+    return (
+      <table>
+        <tr>
+          <Columns />
+        </tr>
+      </table>
+    );
+  }
+}
+
+class Columns extends React.Component {
+  render() {
+    return (
+      <>
+        <td>Hello</td>
+        <td>World</td>
+      </>
+    );
+  }
+}
+
 //*****************************************************
 
 //======================================================
@@ -457,9 +480,9 @@ function ExampleNew() {
 }
 
 function FriendStatus(props) {
-  const [isOnline, setIsOnline] = useState(null)
+  const [isOnline, setIsOnline] = useState(null);
   function handlessStatusChange(status) {
-    setIsOnline(status.)
+    setIsOnline(status.isOnline);
   }
 }
 
